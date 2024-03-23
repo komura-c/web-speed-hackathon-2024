@@ -116,7 +116,7 @@ export const HeroImage: React.FC = () => {
   return (
     <_Wrapper>
       {/* <_Image ref={imageRef} alt="Cyber TOON" /> */}
-      <_Image alt="Cyber TOON" src="/assets/hero-image.png" />
+      <_Image alt="Cyber TOON" src="/assets/hero-image.webp" />
     </_Wrapper>
   );
 };

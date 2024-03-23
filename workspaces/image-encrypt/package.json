@@ -2,7 +2,8 @@
   "name": "@wsh-2024/image-encrypt",
   "private": true,
   "scripts": {
-    "cli": "tsx ./tools/cli.ts"
+    "cli": "tsx ./tools/cli.ts",
+    "image:resize": "tsx ./tools/image-resize/cli.ts"
   },
   "devDependencies": {
     "@jsquash/jxl": "1.1.0",
@@ -11,8 +12,10 @@
     "canvaskit-wasm": "0.39.1",
     "cli-progress": "3.12.0",
     "commander": "12.0.0",
+    "fast-glob": "3.3.2",
     "globby": "14.0.1",
     "jimp": "0.22.12",
+    "sharp": "0.33.2",
     "tsx": "4.7.1"
   }
 }
