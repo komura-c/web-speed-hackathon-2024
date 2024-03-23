@@ -41,11 +41,6 @@ export default defineConfig(async (): Promise<Options[]> => {
           globals: {
             process: false,
           },
-          polyfills: {
-            events: true,
-            fs: true,
-            path: true,
-          },
         }),
       ],
       format: 'iife',
@@ -54,14 +49,14 @@ export default defineConfig(async (): Promise<Options[]> => {
         '.wasm': 'binary',
       },
       metafile: true,
-      minify: false,
+      minify: true,
       outDir: OUTPUT_DIR,
       platform: 'browser',
       shims: true,
-      sourcemap: 'inline',
-      splitting: false,
-      target: ['chrome58', 'firefox57', 'safari11', 'edge18'],
-      treeshake: false,
+      sourcemap: false,
+      splitting: true,
+      target: ['chrome123'],
+      treeshake: true,
     },
   ];
 });
