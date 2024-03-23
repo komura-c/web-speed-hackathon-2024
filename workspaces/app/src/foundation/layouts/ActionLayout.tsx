@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Box } from '../components/Box';
 import { Container } from '../components/Container';
 import { Flex } from '../components/Flex';
-import { Footer } from '../components/Footer';
+import { LazyFooter } from '../components/Footer';
 import { Color, Space } from '../styles/variables';
 
 const _Header = styled.header`
@@ -27,11 +27,11 @@ export const ActionLayout: React.FC<Props> = ({ leftContent, rightContent }) => 
         </Flex>
       </_Header>
 
-      <Box as="main" height="100%" py={Space * 2}>
+      <Box as="main" height="100%" minHeight="100vh" py={Space * 2}>
         <Outlet />
       </Box>
 
-      <Footer />
+      <LazyFooter />
     </Container>
   );
 };

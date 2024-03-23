@@ -6,6 +6,7 @@ import { cacheControlMiddlewareNoStore } from '../../middlewares/cacheControlMid
 import { authApp } from './auth';
 import { authorApp } from './authors';
 import { bookApp } from './books';
+import { constantsApp } from './constants';
 import { episodePageApp } from './episodePages';
 import { episodeApp } from './episodes';
 import { featureApp } from './features';
@@ -40,6 +41,7 @@ app.route('/', featureApp);
 app.route('/', releaseApp);
 app.route('/', rankingApp);
 app.route('/', authApp);
+app.route('/', constantsApp);
 
 app.route('/', internalApp);
 

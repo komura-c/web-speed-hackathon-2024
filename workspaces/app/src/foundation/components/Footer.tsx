@@ -1,13 +1,8 @@
 import { useSetAtom } from 'jotai';
-import React, { useId } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { DialogContentAtom } from '../atoms/DialogContentAtom';
-import { COMPANY } from '../constants/Company';
-import { CONTACT } from '../constants/Contact';
-import { OVERVIEW } from '../constants/Overview';
-import { QUESTION } from '../constants/Question';
-import { TERM } from '../constants/Term';
 import { Color, Space, Typography } from '../styles/variables';
 
 import { Box } from './Box';
@@ -24,10 +19,15 @@ const _Content = styled.section`
   white-space: pre-line;
 `;
 
-export const Footer: React.FC = () => {
-  const [isClient, setIsClient] = React.useState(false);
+const Footer: React.FC = () => {
+  const [isClient, setIsClient] = useState(false);
+  const [term, setTerm] = useState("");
+  const [contact, setContact] = useState("");
+  const [question, setQuestion] = useState("");
+  const [company, setCompany] = useState("");
+  const [overview, setOverview] = useState("");
 
-  React.useEffect(() => {
+  useEffect(() => {
     setIsClient(true);
   }, []);
 
@@ -39,7 +39,13 @@ export const Footer: React.FC = () => {
 
   const updateDialogContent = useSetAtom(DialogContentAtom);
 
-  const handleRequestToTermDialogOpen = () => {
+  const handleRequestToTermDialogOpen = async () => {
+    let termText = "";
+    if (!term) {
+      const res = await fetch('/api/v1/constants/term').then((res) => res.text());
+      termText = JSON.parse(res).text;
+      setTerm(termText);
+    }
     updateDialogContent(
       <_Content aria-labelledby={termDialogA11yId} role="dialog">
         <Text as="h2" color={Color.MONO_100} id={termDialogA11yId} typography={Typography.NORMAL16}>
@@ -47,13 +53,19 @@ export const Footer: React.FC = () => {
         </Text>
         <Spacer height={Space * 1} />
         <Text as="p" color={Color.MONO_100} typography={Typography.NORMAL12}>
-          {TERM}
+          {term !== "" ? term : termText}
         </Text>
       </_Content>,
     );
   };
 
-  const handleRequestToContactDialogOpen = () => {
+  const handleRequestToContactDialogOpen = async () => {
+    let contactText = "";
+    if (!contact) {
+      const res = await fetch('/api/v1/constants/contact').then((res) => res.text());
+      contactText = JSON.parse(res).text;
+      setContact(contactText);
+    }
     updateDialogContent(
       <_Content aria-labelledby={contactDialogA11yId} role="dialog">
         <Text as="h2" color={Color.MONO_100} id={contactDialogA11yId} typography={Typography.NORMAL16}>
@@ -61,13 +73,19 @@ export const Footer: React.FC = () => {
         </Text>
         <Spacer height={Space * 1} />
         <Text as="p" color={Color.MONO_100} typography={Typography.NORMAL12}>
-          {CONTACT}
+          {contact !== "" ? contact : contactText}
         </Text>
       </_Content>,
     );
   };
 
-  const handleRequestToQuestionDialogOpen = () => {
+  const handleRequestToQuestionDialogOpen = async () => {
+    let questionText = "";
+    if (!question) {
+      const res = await fetch('/api/v1/constants/question').then((res) => res.text());
+      questionText = JSON.parse(res).text;
+      setQuestion(questionText);
+    }
     updateDialogContent(
       <_Content aria-labelledby={questionDialogA11yId} role="dialog">
         <Text as="h2" color={Color.MONO_100} id={questionDialogA11yId} typography={Typography.NORMAL16}>
@@ -75,13 +93,19 @@ export const Footer: React.FC = () => {
         </Text>
         <Spacer height={Space * 1} />
         <Text as="p" color={Color.MONO_100} typography={Typography.NORMAL12}>
-          {QUESTION}
+          {question !== "" ? question : questionText }
         </Text>
       </_Content>,
     );
   };
 
-  const handleRequestToCompanyDialogOpen = () => {
+  const handleRequestToCompanyDialogOpen = async () => {
+    let companyText = "";
+    if (!company) {
+      const res = await fetch('/api/v1/constants/company').then((res) => res.text());
+      companyText = JSON.parse(res).text;
+      setCompany(companyText);
+    }
     updateDialogContent(
       <_Content aria-labelledby={companyDialogA11yId} role="dialog">
         <Text as="h2" color={Color.MONO_100} id={companyDialogA11yId} typography={Typography.NORMAL16}>
@@ -89,13 +113,19 @@ export const Footer: React.FC = () => {
         </Text>
         <Spacer height={Space * 1} />
         <Text as="p" color={Color.MONO_100} typography={Typography.NORMAL12}>
-          {COMPANY}
+          {company !== "" ? company : companyText }
         </Text>
       </_Content>,
     );
   };
 
-  const handleRequestToOverviewDialogOpen = () => {
+  const handleRequestToOverviewDialogOpen = async () => {
+    let overviewText = "";
+    if (!overview) {
+      const res = await fetch('/api/v1/constants/overview').then((res) => res.text());
+      overviewText = JSON.parse(res).text;
+      setOverview(overviewText);
+    }
     updateDialogContent(
       <_Content aria-labelledby={overviewDialogA11yId} role="dialog">
         <Text as="h2" color={Color.MONO_100} id={overviewDialogA11yId} typography={Typography.NORMAL16}>
@@ -103,7 +133,7 @@ export const Footer: React.FC = () => {
         </Text>
         <Spacer height={Space * 1} />
         <Text as="p" color={Color.MONO_100} typography={Typography.NORMAL12}>
-          {OVERVIEW}
+          {overview !== "" ? overview : overviewText }
         </Text>
       </_Content>,
     );
@@ -133,4 +163,33 @@ export const Footer: React.FC = () => {
       </Flex>
     </Box>
   );
+};
+
+export const LazyFooter = () => {
+  const elemRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          observer.disconnect();
+          if (!entry.target || !elemRef.current || !elemRef) return;
+        }
+      },
+      {
+        rootMargin: '20px',
+      },
+    );
+
+    if (!elemRef.current) return;
+    observer.observe(elemRef.current);
+
+    return () => {
+      if (!elemRef.current) return;
+      observer.unobserve(elemRef.current);
+    };
+  }, []);
+
+  return <div ref={elemRef}>{<Footer />}</div>;
 };

@@ -17,6 +17,7 @@ const _Box = styled.div<{
   $maxHeight?: number | string;
   $maxWidth?: number | string;
   $mb?: number;
+  $minHeight?: number | string;
   $ml?: number;
   $mr?: number;
   $mt?: number;
@@ -64,6 +65,7 @@ const _Box = styled.div<{
   right: ${({ $right }) => addUnitIfNeeded($right)};
   top: ${({ $top }) => addUnitIfNeeded($top)};
   width: ${({ $width }) => addUnitIfNeeded($width)};
+  min-height: ${({ $minHeight }) => addUnitIfNeeded($minHeight)};
 `;
 
 type Props = {
@@ -82,6 +84,7 @@ type Props = {
   maxHeight?: number | string;
   maxWidth?: number | string;
   mb?: number;
+  minHeight?: number | string;
   ml?: number;
   mr?: number;
   mt?: number;
@@ -120,6 +123,7 @@ export const Box: React.FC<Props> = ({
   maxHeight,
   maxWidth,
   mb,
+  minHeight,
   ml,
   mr,
   mt,
@@ -154,6 +158,7 @@ export const Box: React.FC<Props> = ({
       $maxHeight={maxHeight}
       $maxWidth={maxWidth}
       $mb={mb}
+      $minHeight={minHeight}
       $ml={ml}
       $mr={mr}
       $mt={mt}
