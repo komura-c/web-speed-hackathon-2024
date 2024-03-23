@@ -17,7 +17,6 @@ import { jpegXlConverter } from '../../image-converters/jpegXlConverter';
 import { pngConverter } from '../../image-converters/pngConverter';
 import { webpConverter } from '../../image-converters/webpConverter';
 import { cacheControlMiddlewarePublic } from '../../middlewares/cacheControlMiddleware';
-import { compressMiddleware } from '../../middlewares/compressMiddleware';
 
 const createStreamBody = (stream: ReadStream) => {
   const body = new ReadableStream({
@@ -66,8 +65,7 @@ const IMAGE_CONVERTER: Record<SupportedImageExtension, ConverterInterface> = {
 const app = new Hono();
 
 app.use(
-  '/images/:imageFile', 
-  compressMiddleware,
+  '/images/*', 
   cacheControlMiddlewarePublic
 );
 app.get(
