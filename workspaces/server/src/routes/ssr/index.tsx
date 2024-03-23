@@ -16,6 +16,7 @@ import { ClientApp } from '@wsh-2024/app/src/index';
 // import { getDayOfWeekStr } from '@wsh-2024/app/src/lib/date/getDayOfWeekStr';
 
 import { INDEX_HTML_PATH } from '../../constants/paths';
+import { cacheControlMiddlewareNoStore } from '../../middlewares/cacheControlMiddleware';
 
 const app = new Hono();
 
@@ -68,6 +69,7 @@ async function createHTML({
   return content;
 }
 
+app.use('*', cacheControlMiddlewareNoStore);
 app.get('*', async (c) => {
   // const injectData = await createInjectDataStr();
   const sheet = new ServerStyleSheet();
