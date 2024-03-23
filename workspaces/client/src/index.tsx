@@ -15,7 +15,7 @@ const main = async () => {
 
   const root = document.getElementById('root')!;
   if (window.location.pathname.startsWith('/admin')) {
-    const { AdminApp } = await import('@wsh-2024/admin/src/index');
+    const AdminApp = (await import('@wsh-2024/admin/src/index')).default;
     createRoot(root).render(<AdminApp />);
   } else {
     hydrateRoot(
