@@ -31,7 +31,7 @@ export const AdminApp: React.FC = () => {
   }, [toast]);
 
   return (
-    <Suspense fallback={<h2>Loading...</h2>}>
+    <Suspense fallback={null}>
       <QueryClientProvider client={queryClient}>
         <ChakraProvider>
           <RouterProvider router={router()} />

@@ -88,7 +88,7 @@ const AuthorDetailPage: React.FC = () => {
 
 const AuthorDetailPageWithSuspense: React.FC = () => {
   return (
-    <Suspense fallback={<h2>Loading...</h2>}>
+    <Suspense fallback={null}>
       <AuthorDetailPage />
     </Suspense>
   );

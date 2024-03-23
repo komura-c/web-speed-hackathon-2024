@@ -88,7 +88,7 @@ const FeatureCard: React.FC<Props> = ({ book }) => {
 
 const FeatureCardWithSuspense: React.FC<Props> = (props) => {
   return (
-    <Suspense fallback={<h2>Loading...</h2>}>
+    <Suspense fallback={null}>
       <FeatureCard {...props} />
     </Suspense>
   );
