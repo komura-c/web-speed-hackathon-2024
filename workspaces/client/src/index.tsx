@@ -21,7 +21,7 @@ const main = async () => {
     } else {
       ReactDOM.hydrateRoot(
         $('#root').get(0)!,
-        <SWRConfig value={{ revalidateIfStale: true, revalidateOnFocus: false, revalidateOnReconnect: false }}>
+        <SWRConfig value={{ fallback: {} }}>
           <BrowserRouter>
             <ClientApp />
           </BrowserRouter>
