@@ -1,14 +1,18 @@
 export async function registerServiceWorker() {
-  if (!('serviceWorker' in navigator)) {
-    return;
-  }
-  const worker = navigator.serviceWorker;
-  const registrations = await worker.getRegistrations();
-  if (registrations?.length) {
-    for (const registration of registrations) {
-      registration.unregister();
+  const registration = await navigator.serviceWorker
+    .register('/serviceworker.global.js', { updateViaCache: 'none' })
+    .then(() => navigator.serviceWorker.ready);
+
+  // Wait until the service worker becomes active
+  await new Promise<void>((resolve) => {
+    const activeServiceWorker = registration.active!;
+    if (activeServiceWorker.state === 'activated') {
+      resolve();
     }
-  }
-  // return await worker.register('/serviceworker.global.js', { updateViaCache: 'none' })
-  return
+    activeServiceWorker.addEventListener('statechange', (ev) => {
+      if (ev.target instanceof ServiceWorker && ev.target.state === 'activated') {
+        resolve();
+      }
+    });
+  });
 }
