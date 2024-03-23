@@ -9,7 +9,7 @@ const app = new OpenAPIHono();
 
 const route = createRoute({
   method: 'get',
-  path: '/api/v1/episodePages/{pageId}',
+  path: '/api/v1/episodePages/{episodePageId}',
   request: {
     params: GetEpisodePageRequestParamsSchema,
   },
