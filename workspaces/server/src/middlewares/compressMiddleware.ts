@@ -8,7 +8,7 @@ export const compressMiddleware = createMiddleware(async (c, next) => {
   await next();
   const { ZstdStream } = await zstdInit;
 
-  const accept = encoding(c.req.header('X-Accept-Encoding'), ['zstd']);
+  const accept = encoding(c.req.header('Accept-Encoding'), ['zstd']);
 
   switch (accept) {
     case 'zstd': {

@@ -13,7 +13,7 @@ app.use(
   cacheControlMiddlewarePublic,
 );
 app.use(
-  '/*.js',
+  '/client.global.js',
   cacheControlMiddlewarePublic,
 );
 app.use(
