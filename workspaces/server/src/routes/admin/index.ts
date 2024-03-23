@@ -9,13 +9,21 @@ const app = new Hono();
 
 app.use('/admin', cacheControlMiddlewareNoStore);
 app.get('/admin', async (c) => {
-  const html = await fs.readFile(INDEX_HTML_PATH, 'utf-8');
+  const htmlContent = await fs.readFile(INDEX_HTML_PATH, 'utf-8');
+  const html = htmlContent.replaceAll(
+    '<script id="client-js" type="text/javascript"></script>',
+    '<script type="text/javascript" src="/admin.global.js" defer></script>',
+  );
   return c.html(html);
 });
 
 app.use('/admin/*', cacheControlMiddlewareNoStore);
 app.get('/admin/*', async (c) => {
-  const html = await fs.readFile(INDEX_HTML_PATH, 'utf-8');
+  const htmlContent = await fs.readFile(INDEX_HTML_PATH, 'utf-8');
+  const html = htmlContent.replaceAll(
+    '<script id="client-js" type="text/javascript"></script>',
+    '<script type="text/javascript" src="/admin.global.js" defer></script>',
+  );
   return c.html(html);
 });
 

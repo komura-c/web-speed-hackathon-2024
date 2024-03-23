@@ -55,6 +55,10 @@ async function createHTML({
   const content = htmlContent
     .replaceAll('<div id="root"></div>', `<div id="root">${body}</div>`)
     .replaceAll('<style id="tag"></style>', styleTags)
+    .replaceAll(
+      '<script id="client-js" type="text/javascript"></script>',
+      '<script type="text/javascript" src="/client.global.js" defer></script>',
+    );
     // .replaceAll(
     //   '<script id="inject-data" type="application/json"></script>',
     //   `<script id="inject-data" type="application/json">
