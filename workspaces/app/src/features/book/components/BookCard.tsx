@@ -74,7 +74,7 @@ const BookCard: React.FC<Props> = ({ book }) => {
 
 const BookCardWithSuspense: React.FC<Props> = (props) => {
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<h2>Loading...</h2>}>
       <BookCard {...props} />
     </Suspense>
   );

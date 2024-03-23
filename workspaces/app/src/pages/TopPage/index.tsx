@@ -85,7 +85,7 @@ const TopPage: React.FC = () => {
 
 const TopPageWithSuspense: React.FC = () => {
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<h2>Loading...</h2>}>
       <TopPage />
     </Suspense>
   );
