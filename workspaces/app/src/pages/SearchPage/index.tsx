@@ -9,13 +9,13 @@ import { Input } from './internal/Input';
 import { SearchResult } from './internal/SearchResult';
 
 const SearchPage: React.FC = () => {
-  const { data: books } = useBookList({ query: {} });
-
   const searchResultsA11yId = useId();
-
   const [isClient, setIsClient] = useState(false);
-  const [keyword, setKeyword] = useState('');
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
+  const [keyword, setKeyword] = useState('')
   const onChangedInput = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setKeyword(event.target.value);
@@ -23,13 +23,34 @@ const SearchPage: React.FC = () => {
     [setKeyword],
   );
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  const getWithQuery = (query: string) => {
+    if (!query) {
+      return { 
+        query: {
+          name: '',
+          nameRuby: '',
+        }
+      };
+    }
+    return { 
+      query: {
+        name: keyword,
+        nameRuby: keyword,
+      }
+    }
+  };
+  const { data: books } = useBookList(getWithQuery(keyword));
+
 
   return (
     <Box px={Space * 2}>
-      <Input disabled={!isClient} onChange={onChangedInput} />
+      <Input 
+          disabled={!isClient} 
+          onBlur={(e) => {
+              e.target.focus()
+          }} 
+          onChange={(e) => onChangedInput(e)}
+        />
       <Box aria-labelledby={searchResultsA11yId} as="section" maxWidth="100%" py={Space * 2} width="100%">
         <Text color={Color.MONO_100} id={searchResultsA11yId} typography={Typography.NORMAL20} weight="bold">
           検索結果

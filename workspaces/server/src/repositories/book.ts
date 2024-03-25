@@ -108,6 +108,9 @@ class BookRepository implements BookRepositoryInterface {
           if (options.query.name != null) {
             return like(book.name, `%${options.query.name}%`);
           }
+          if (options.query.nameRuby != null) {
+            return like(book.nameRuby, `%${options.query.name}%`);
+          }
           return;
         },
         with: {
